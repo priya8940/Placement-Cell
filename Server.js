@@ -1,5 +1,6 @@
 require('./Config/dbconnection')
 const empRoute = require('./Router/emproute');
+const studentRoute = require('./Router/studentRoute');
 // const reviewRoute = require('./routes/reviewRoute');
 const express = require('express');
 const app = express();
@@ -12,8 +13,8 @@ const app = express();
 //     credentials: true
 // }));
 // app.use(cookieParser());
- app.use(express.json());
-app.use('/employees/',empRoute);
-// app.use('/v1/reviews/',reviewRoute);
+app.use(express.json());
+app.use('/employees',empRoute);
+app.use('/students',studentRoute);
 
 app.listen('8000');

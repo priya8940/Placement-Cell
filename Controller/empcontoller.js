@@ -1,7 +1,11 @@
-const empmodel=require('../Model/employee')
+const empModel=require('../Model/employee')
  
 module.exports.register =async (req, res)=>{
     const {email, name, password} = req.body;
+    // console.log(req.body);
+    // console.log(email)
+    // console.log(name)
+    // console.log(password)
     const userFound = await empModel.findOne({'email':email});
     if(userFound!=null){
         res.json({
@@ -10,7 +14,7 @@ module.exports.register =async (req, res)=>{
         });
         return res;
     }
-    const savedUser=await empmodel.create({
+    const savedUser=await empModel.create({
         'email':email,
         'name':name,
         'password':password

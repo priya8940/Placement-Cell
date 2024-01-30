@@ -7,6 +7,10 @@ const studentSchema = new Schema({
         type: String,
         required: true
     },
+    email:{
+        type: String,
+        required: true
+    },
     college_name:{
         type: String,
         required: true
@@ -14,12 +18,16 @@ const studentSchema = new Schema({
     status:{
         type: String
     },
-    dsa:{
-        type: Boolean,
+    dsa_score:{
+        type: Number,
        
     },
-    react:{
-        type: Boolean,
+    react_score:{
+        type: Number,
+        
+    },
+    web_dev_score:{
+        type: Number,
         
     },
 },{
