@@ -3,14 +3,14 @@ const studentModel=require('../Model/student')
 
 module.exports.register =async (req, res)=>{
     const {college_name,status,dsa_score,react_score,web_dev_score,name,email} = req.body;
-    console.log(req.body)
-    console.log( college_name)
-    console.log(status)
-    console.log(dsa_score)
-    console.log(react_score)
-    console.log(web_dev_score)
-    console.log(name)
-    console.log(email)
+    // console.log(req.body)
+    // console.log( college_name)
+    // console.log(status)
+    // console.log(dsa_score)
+    // console.log(react_score)
+    // console.log(web_dev_score)
+    // console.log(name)
+    // console.log(email)
 
    
     const userFound = await studentModel.findOne({'email':email});
@@ -42,23 +42,42 @@ module.exports.getAllStudent =async (req, res)=>{
     const studentArrList=await studentModel.find()
     res.json({
             'status_code':200,
-            'message': 'student  has been fetched successfully',
+            'message': 'students  has been fetched successfully',
             'students': studentArrList
         });
     return res;
 }
 
-module.exports.deleteStudent=async(req,res)=>{
 
-}
-module.exports.delete = async (req, res)=>{
-    const coockie = req.cookies._id;
-    const loggedInStu = await studentModel.findById(coockie);
-    if(loggedInStu==null){
+module.exports.deleteStudent = async (req, res)=>{
+    //const id = req.params.id;
+    console.log(id)
+    const student=await studentModel.findById(id)
+    if(student==null){
         res.json({
-            'message': 'student is not logged in',
-            'status_code': 403
+            'message': 'student does not exist',
+            'status_code': 404
         })
         return res;
     }
+    const deleteStudent = await studentModel.findByIdAndDelete(id);
+    res.json({
+        'message': 'student has been deleted succesfully',
+        'status_code': 200
+    })
+    return res;
+    
 }
+module.exports.getStudent = async (req, res)=>{
+    const id = req.params.id;
+    //console.log(id)
+    const student=await studentModel.findById(id)
+        res.json({
+            'message': 'Student has been fetched succcesfully',
+            'status_code': 200,
+            'students':student
+        })
+        return res;
+    
+}
+

@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const interViewSchema = new Schema({
-   compaany_name:{
+   company_name:{
         type: String,
         required: true
     },
-    date:{
-        type: date,
+   interview_date:{
+        type: Date,
         required: true
         
     },

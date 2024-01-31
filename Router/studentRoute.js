@@ -4,7 +4,7 @@ const studCtrl = require('../Controller/studentController');
 
 studentRouter.post('/register',studCtrl.register);
 studentRouter.get('/allstudent',studCtrl.getAllStudent);
-studentRouter.delete('/delete',studCtrl.deleteStudent);
-//studentRouter.get('/students/:id',studCtrl.getStudentById);
+studentRouter.delete('/delete/:id',studCtrl.deleteStudent);
+studentRouter.get('/:id',studCtrl.getStudent);
 
-module.exports= studentRouter;
+module.exports= studentRouter;  

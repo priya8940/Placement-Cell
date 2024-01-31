@@ -1,6 +1,7 @@
 require('./Config/dbconnection')
 const empRoute = require('./Router/emproute');
 const studentRoute = require('./Router/studentRoute');
+const interViewRoute=require('./Router/interViewRoute')
 // const reviewRoute = require('./routes/reviewRoute');
 const express = require('express');
 const app = express();
@@ -16,5 +17,6 @@ const app = express();
 app.use(express.json());
 app.use('/employees',empRoute);
 app.use('/students',studentRoute);
+app.use('/interview',interViewRoute);
 
 app.listen('8000');
