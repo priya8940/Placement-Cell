@@ -1,28 +1,46 @@
 const interviewModel=require('../Model/interview')
+
 module.exports.creatInterview =async (req, res)=>{
-    const {company_name,interview_date} = req.body;
-    const userFound = await interviewModel.findOne({'company_name':company_name});
-    if(company_name!=null){
-        res.json({
-            'status_code':409,
-            'message': 'student already Exist'
-        });
-        return res;
-    }
-    const savedStudent=await studentModel.create({
-        'email':email,
-        'name':name,
-        'college_name':college_name,
-        'status':status,
-        'dsa_score':dsa_score,
-        'react_score':react_score,
-        'web_dev_score':web_dev_score,
+    const {company_name,interview_date} = req.body; 
+    const interview=await interviewModel.create({
+          "company_name":company_name,
+          "interview_date":interview_date
       
     })
     res.json({
-            'status_code':201,
-            'message': 'User has been added successfully',
-            'student': savedStudent
+        'status_code':201,
+        'message': 'interview has been created successfully',
+        'interview':interview
+    })
+    return res;
+    
+}
+module.exports.getAllInterview =async (req, res)=>{
+    const interviews=await interviewModel.find()
+    res.json({
+            'status_code':200,
+            'message': 'interviews has been fetched successfully',
+            'students': interviews
+        });
+    return res;
+}
+module.exports.getInterview =async (req, res)=>{
+    const id=req.params.id;
+    const interview=await interviewModel.findById(id)
+    res.json({
+            'status_code':200,
+            'message': 'interview has been fetched successfully',
+            'students': interview
+        });
+    return res;
+}
+module.exports.deleteInterview =async (req, res)=>{
+    const id=req.params.id;
+    const interviewDel=await interviewModel.findByIdAndDelete(id)
+    res.json({
+            'status_code':200,
+            'message': 'interview has been deleted successfully',
+            'students': interviewDel
         });
     return res;
 }

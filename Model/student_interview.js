@@ -5,11 +5,13 @@ const Schema = mongoose.Schema;
 const stuInterViewSchema = new Schema({
     stu_id:{
         type: Schema.Types.ObjectId,
-        ref: "student"
+        ref: "student",
+        required:true
     },
     interview_id:{
         type: Schema.Types.ObjectId,
-        ref: "interView"
+        ref: "interView",
+        required:true
     },
     result:{
         type:String,

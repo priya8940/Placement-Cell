@@ -3,8 +3,8 @@ const interviewRouter = express.Router();
 const interviewCtrl = require('../Controller/interviewController');
 
 interviewRouter.post('/register',interviewCtrl.creatInterview);
-// studentRouter.get('/allstudent',studCtrl.getAllStudent);
-// studentRouter.delete('/delete/:id',studCtrl.deleteStudent);
-// studentRouter.get('/:id',studCtrl.getStudent);
+interviewRouter.get('/all-interviews',interviewCtrl.getAllInterview);
+interviewRouter.delete('/delete/:id',interviewCtrl.deleteInterview);
+interviewRouter.get('/:id',interviewCtrl.getInterview);
 
 module.exports= interviewRouter;  

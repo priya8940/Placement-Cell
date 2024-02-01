@@ -2,7 +2,7 @@ require('./Config/dbconnection')
 const empRoute = require('./Router/emproute');
 const studentRoute = require('./Router/studentRoute');
 const interViewRoute=require('./Router/interViewRoute')
-// const reviewRoute = require('./routes/reviewRoute');
+ const studentInterviewRoutee = require('./Router/studentInterviewRoute');
 const express = require('express');
 const app = express();
 //import cors to enable cross origin requests
@@ -17,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use('/employees',empRoute);
 app.use('/students',studentRoute);
-app.use('/interview',interViewRoute);
+app.use('/interviews',interViewRoute);
+app.use('/student-interview',studentInterviewRoutee);
 
 app.listen('8000');
