@@ -1,3 +1,10 @@
+// async function register(){
+//     let response=await fetch('http://localhost:8000/employees/register')
+//     let data=await response.json();
+//     console.log(data);
+// }
+// register()
+
 let registerButton = document.getElementById('register');
 
 registerButton.addEventListener('click',()=>{
@@ -42,7 +49,7 @@ registerButton.addEventListener('click',()=>{
         'email':email,
         'password':password
     };
-    fetch("http://localhost:8000/v1/employees/register",{
+    fetch("http://localhost:8000/employees/register",{
         'method':'POST',
         'credentials':'include',
         'headers':{
@@ -60,7 +67,6 @@ registerButton.addEventListener('click',()=>{
             h1Ele.innerText = `Hi ${data.user.name}, You have been registered successfully`
         }
         rootEle.innerHTML = "";
-        rootEle.appendChild(h1Ele);
     })
 })
 });
