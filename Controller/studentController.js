@@ -2,7 +2,7 @@ const studentModel=require('../Model/student')
 
 
 module.exports.register =async (req, res)=>{
-    const {college_name,status,dsa_score,react_score,web_dev_score,name,email} = req.body;
+    const {college_name,status,dsa_score,react_score,web_dev_score,name,email,batch} = req.body;
     // console.log(req.body)
     // console.log( college_name)
     // console.log(status)
@@ -29,6 +29,7 @@ module.exports.register =async (req, res)=>{
         'dsa_score':dsa_score,
         'react_score':react_score,
         'web_dev_score':web_dev_score,
+        'batch':batch
       
     })
     res.json({

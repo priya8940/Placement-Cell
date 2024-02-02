@@ -6,14 +6,15 @@ const interViewRoute=require('./Router/interViewRoute')
 const express = require('express');
 const app = express();
 //import cors to enable cross origin requests
-// const cookieParser = require('cookie-parser');
-// const cors = require('cors')
+const cookieParser = require('cookie-parser');
+const cors = require('cors')
 
-// app.use(cors({
-//     origin: 'http://localhost:5500', //front end domain url
-//     credentials: true
-// }));
-// app.use(cookieParser());
+app.use(cors({
+    origin: 'http://localhost:5500', //front end domain url
+    credentials: true
+}));
+//app.use(express.urlencoded());
+app.use(cookieParser());
 app.use(express.json());
 app.use('/employees',empRoute);
 app.use('/students',studentRoute);
