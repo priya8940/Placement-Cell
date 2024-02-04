@@ -7,28 +7,32 @@
     <link rel="stylesheet" href="./placement-cell.css">
 </head>
 <body>
-    <header class="main-header">
-        <div class="title-heading">
-            <h2>PLACEMENT-CELL</h2>
+  <header class="main-header">
+     <div class="title-heading">
+         <h2 class="heading">PLACEMENT-CELL</h2>
          <div class="buttons">
-            <button id="register">Register</button>
-            <button id="login">Login</button>
-            <button id="login">ADD STUDENT</button>
-            <button id="login">ADD INTERVIEW</button>
-            <button id="login">LOG OUT</button>
-          </div>
-        </div>
-       
+            <button id="register">REGISTER</button>
+            <button id="log_in">LOGIN</button>
+            <button id="add"> STUDENT</button>
+            <button id="interview">INTERVIEW</button>
+            <button id="log_out">LOG OUT</button>
+         </div>
+      </div>    
     </header>
     <main id="root">
         
-        <div class="register">
+        <!-- <div class="register">
             <input type="text" id="name" name="name" placeholder="Enter your name"/>
             <input type="email" id="email" name="email" placeholder="Enter your email"/>
             <input type="password" id="password" name="password" placeholder="Enter your password"/>
             <button id="register-button">Register</button>
+        </div> -->
+        <div class="login">
+            <input type="email" id="email-login" name="email" placeholder="Enter your email"/>
+            <input type="password" id="password-login" name="password" placeholder="Enter your password"/>
+            <button id="login-button">Login</button>
         </div>
-        </main>
+    </main>
         <script src="placement-cell.js"></script>
 </body>
 </html>

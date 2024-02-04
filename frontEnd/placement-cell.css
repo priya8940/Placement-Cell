@@ -1,15 +1,29 @@
 body{
     margin: 0;
+    padding: 10px;
 
 }
 .title-heading{
     background-color: aquamarine;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     height: 50px;
+    width: 115%;
    
+   
+}
+.heading{
+    
+}
+.register{
+    text-align: center;
+    margin-top: 10%;
+}
+.login{
+    text-align: center;
    
 }
 .buttons{
     margin-top: 22px;
+   
 }
