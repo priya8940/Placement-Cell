@@ -40,6 +40,14 @@ module.exports.register =async (req, res)=>{
     return res;
 }
 module.exports.getAllStudent =async (req, res)=>{
+    const cookie=req.cookies.id;
+    if(cookie==-1){
+        res.json({
+            'status_code':403,
+            'message': 'You ARE not authoriged',
+            
+        });
+    }
     const studentArrList=await studentModel.find()
     res.json({
             'status_code':200,

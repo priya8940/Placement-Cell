@@ -79,9 +79,20 @@ module.exports.logIn = async (req, res) =>{
         return res;
     }
 }
+module.exports.logout = async (req, res) =>{
+        res.cookie('emp_id','-1')
+        res.json({
+            'status_code':200,
+            'messege':"You have logged out Successfully"
+        })
+        return res;
+
+
+
+}
 
 module.exports.checkSession=async (req,res)=>{
-    const cookie=req?.cookie?.emp_id;
+    const cookie=req?.cookies?.emp_id;
     if(cookie==null || cookie==undefined || cookie=="" || cookie==-1){
         res.json({
                 'status_code':404,

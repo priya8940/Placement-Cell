@@ -75,7 +75,7 @@ buttonEle.addEventListener('click',function doRegister(){
     //register ended here
 
    //login starts fromm here
-   let loginButton = document.getElementById('login');
+   let loginButton = document.getElementById('log_in');
 
    loginButton.addEventListener('click',()=>{
        let rootEle = document.getElementById('root');
@@ -148,15 +148,76 @@ buttonEle.addEventListener('click',function doRegister(){
 })
 
 function welcomeEmployee(){
-    let loginBtn = document.getElementById('login');
+    let loginBtn = document.getElementById('log_in');
     loginBtn.style.visibility = 'hidden';
     let registerBtn = document.getElementById('register');
     registerBtn.style.visibility = 'hidden';
 
-    let logOutBtn = document.getElementById('logout');
+    let logOutBtn = document.getElementById('log_out');
     logOutBtn.style.visibility = 'visible';
 }
- 
+let logOutButton = document.getElementById('log_out');
+
+logOutButton.addEventListener('click',()=>{
+    fetch(`http://localhost:8000/employees/log_out`,{
+        'method':'GET',
+        'credentials':'include',
+        'headers':{
+            'content-type':'application/json'
+        },
+
+    }).then(data=>{
+        return data.json();
+    }).then(data=>{
+        let loginBtn = document.getElementById('log_in');
+        loginBtn.style.visibility = 'visible';
+        let registerBtn = document.getElementById('register');
+        registerBtn.style.visibility = 'visible';
+
+        let logOutBtn = document.getElementById('log_out');
+        logOutBtn.style.visibility = 'hidden';
+
+        let h3Ele = document.createElement('h3');
+        h3Ele.innerText = data.message;
+        let rootEle = document.getElementById('root');
+        rootEle.innerHTML = '';
+        // let reviewContainerDiv = document.getElementById('reviews-container');
+        // reviewContainerDiv.innerHTML = '';
+        rootEle.appendChild(h3Ele);
+        window.alert(data.message);
+    })
+})
+   
+ //SHow All Student
+function showStudents(data){
+    let rootEle = document.getElementById('root');
+    let nameEle = document.createElement('label');
+    nameEle.innerText = data.name;
+    nameEle.classList.add('name');
+
+    let emailEle = document.createElement('label');
+    emailEle.innerText = data.email;
+    emailEle.classList.add('email');
+
+    let batchEle = document.createElement('label');
+    batchEle.innerText = data.batch;
+    batchEle.classList.add('batch');
+
+    let statusEle = document.createElement('label');
+    statusEle.innerText = data.status;
+    statusEle.classList.add('status');
+
+    let updateButton = document.createElement('button');
+    updateButton.innerText = 'update';
+    updateButton.classList.add('update');
+
+    let deleteButton = document.createElement('button');
+    deleteButton.innerText = 'delete';
+    deleteButton.classList.add('delete');
+
+}
+
+
 function amILoggedIn(){
     fetch(`http://localhost:8000/employees/checkSession`,{
       'credentials':'include',
@@ -168,9 +229,11 @@ function amILoggedIn(){
     }
        
     ).then(response=>{
-       console.log(response);
-
+        if(response.status_code===200){
+            welcomeEmployee();
+        }
+       
     })
 }
 amILoggedIn();
-   
+

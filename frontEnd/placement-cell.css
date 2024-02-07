@@ -8,7 +8,6 @@ body{
     display: flex;
     justify-content: space-around;
     height: 50px;
-    width: 115%;
    
    
 }
@@ -26,4 +25,24 @@ body{
 .buttons{
     margin-top: 22px;
    
+}
+.login{
+    text-align: center;
+    margin-top: 10%;
+}
+.student{
+    width: 85%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    height: 20px;
+   
+}
+.student{
+    margin-top: 10px;
+    border: 2px solid blueviolet;
+    border-collapse: collapse;
+    background-color: rgb(142, 178, 34);
+
 }
