@@ -30,19 +30,25 @@ body{
     text-align: center;
     margin-top: 10%;
 }
-.student{
+.student-row{
     width: 85%;
     margin: auto;
     display: flex;
     justify-content: space-between;
     padding: 5px;
     height: 20px;
-   
-}
-.student{
     margin-top: 10px;
     border: 2px solid blueviolet;
     border-collapse: collapse;
     background-color: rgb(142, 178, 34);
-
+   
+}
+.studentData-form{
+    text-align: center;
+    font-family: sans-serif;
+    margin-top: 85px;
+    
+}
+.studentData-form label{
+    margin-top: 3px;
 }

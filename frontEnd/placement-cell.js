@@ -155,6 +155,26 @@ function welcomeEmployee(){
 
     let logOutBtn = document.getElementById('log_out');
     logOutBtn.style.visibility = 'visible';
+    document.getElementById('student').style.visibility='visible';
+    document.getElementById('interview').style.visibility='visible';
+    
+    document.getElementById('add_stu').style.visibility='hidden';
+    document.getElementById('add_interview').style.visibility='hidden';
+}
+
+function loggedOut(){
+    let loginBtn = document.getElementById('log_in');
+    loginBtn.style.visibility = 'visible';
+    let registerBtn = document.getElementById('register');
+    registerBtn.style.visibility = 'visible';
+
+    let logOutBtn = document.getElementById('log_out');
+    logOutBtn.style.visibility = 'hidden';
+    
+    document.getElementById('student').style.visibility='hidden';
+    document.getElementById('interview').style.visibility='hidden';
+    document.getElementById('add_stu').style.visibility='hidden';
+    document.getElementById('add_interview').style.visibility='hidden';
 }
 let logOutButton = document.getElementById('log_out');
 
@@ -168,54 +188,110 @@ logOutButton.addEventListener('click',()=>{
 
     }).then(data=>{
         return data.json();
-    }).then(data=>{
-        let loginBtn = document.getElementById('log_in');
-        loginBtn.style.visibility = 'visible';
-        let registerBtn = document.getElementById('register');
-        registerBtn.style.visibility = 'visible';
-
-        let logOutBtn = document.getElementById('log_out');
-        logOutBtn.style.visibility = 'hidden';
-
+    }).then(data=>{ 
+        loggedOut();
         let h3Ele = document.createElement('h3');
-        h3Ele.innerText = data.message;
+        h3Ele.innerText = data.messege;
         let rootEle = document.getElementById('root');
         rootEle.innerHTML = '';
         // let reviewContainerDiv = document.getElementById('reviews-container');
         // reviewContainerDiv.innerHTML = '';
         rootEle.appendChild(h3Ele);
-        window.alert(data.message);
+        
     })
 })
-   
+
+var studentButton=document.getElementById('student');
+   studentButton.addEventListener('click',()=>{
+    fetch(`http://localhost:8000/students/allstudent`,{
+        'method':'GET',
+        'credentials':'include',
+        'headers':{
+            'Content-Type':'application/json'
+          }
+        }).then((data)=>{
+        return data.json();
+        }).then((res)=>{
+           showStudents(res);
+    })
+});
+
  //SHow All Student
 function showStudents(data){
+    document.getElementById('add_stu').style.visibility='visible';
+    document.getElementById('add_interview').style.visibility='hidden';
+    document.getElementById('interview').style.visibility='hidden';
     let rootEle = document.getElementById('root');
-    let nameEle = document.createElement('label');
-    nameEle.innerText = data.name;
-    nameEle.classList.add('name');
+    rootEle.innerHTML="";
+    const studArr=data.students;
+    for(let student of studArr){
+        let divEle=document.createElement('div');
+        divEle.classList.add('student-row');
+        divEle.id=student._id;
 
-    let emailEle = document.createElement('label');
-    emailEle.innerText = data.email;
-    emailEle.classList.add('email');
+        let nameEle = document.createElement('label');
+        nameEle.innerText = student.name;
+        nameEle.classList.add('name');
+        divEle.appendChild(nameEle)
+        
 
-    let batchEle = document.createElement('label');
-    batchEle.innerText = data.batch;
-    batchEle.classList.add('batch');
+        let emailEle = document.createElement('label');
+        emailEle.innerText = student.email;
+        emailEle.classList.add('email');
+        divEle.appendChild(emailEle)
 
-    let statusEle = document.createElement('label');
-    statusEle.innerText = data.status;
-    statusEle.classList.add('status');
+        let batchEle = document.createElement('label');
+        batchEle.innerText = student.batch;
+        batchEle.classList.add('batch');
+        divEle.appendChild(batchEle)
 
-    let updateButton = document.createElement('button');
-    updateButton.innerText = 'update';
-    updateButton.classList.add('update');
+        let statusEle = document.createElement('label');
+        statusEle.innerText = student.status;
+        statusEle.classList.add('status');
+        divEle.appendChild(statusEle)
 
-    let deleteButton = document.createElement('button');
-    deleteButton.innerText = 'delete';
-    deleteButton.classList.add('delete');
+        let updateButton = document.createElement('button');
+        updateButton.innerText = 'update';
+        updateButton.classList.add('update');
+        divEle.appendChild(updateButton)
+        updateButton.addEventListener('click',updateStudent)
+
+        let deleteButton = document.createElement('button');
+        deleteButton.innerText = 'delete';
+        deleteButton.classList.add('delete');
+        deleteButton.addEventListener('click',deleteStudent)
+
+
+        divEle.appendChild(deleteButton)
+        rootEle.appendChild(divEle)
+    }
 
 }
+function deleteStudent(event){
+    let divEle = event.target.parentElement;
+    let id = divEle.id;
+    fetch(`http://localhost:8000/students/delete/${id}`,{
+        'method':'DELETE',
+        'credentials':'include',
+        'headers':{
+            'content-cype':'application/json'
+        }
+
+    }).then((data)=>{
+        return data.json();
+    }).then((data)=>{
+        let rootEle = document.getElementById('root');
+        if(data.status_code===200 ){
+            rootEle.removeChild(divEle)
+        }
+    }) 
+}
+function updateStudent(event){
+        
+}
+    
+
+
 
 
 function amILoggedIn(){
@@ -231,6 +307,8 @@ function amILoggedIn(){
     ).then(response=>{
         if(response.status_code===200){
             welcomeEmployee();
+        }else{
+            loggedOut();
         }
        
     })

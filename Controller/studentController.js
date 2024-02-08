@@ -59,8 +59,8 @@ module.exports.getAllStudent =async (req, res)=>{
 
 
 module.exports.deleteStudent = async (req, res)=>{
-    //const id = req.params.id;
-    console.log(id)
+    const id = req.params.id;
+    //console.log(id)
     const student=await studentModel.findById(id)
     if(student==null){
         res.json({
