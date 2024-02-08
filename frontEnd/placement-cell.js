@@ -218,6 +218,7 @@ var studentButton=document.getElementById('student');
 
  //SHow All Student
 function showStudents(data){
+    document.getElementById('student').style.visibility='hidden';
     document.getElementById('add_stu').style.visibility='visible';
     document.getElementById('add_interview').style.visibility='hidden';
     document.getElementById('interview').style.visibility='hidden';
