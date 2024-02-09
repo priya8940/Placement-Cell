@@ -34,7 +34,7 @@ module.exports.register =async (req, res)=>{
     })
     res.json({
             'status_code':201,
-            'message': 'User has been added successfully',
+            'message': 'Student has been added successfully',
             'student': savedStudent
         });
     return res;

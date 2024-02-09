@@ -43,12 +43,31 @@ body{
     background-color: rgb(142, 178, 34);
    
 }
-.studentData-form{
-    text-align: center;
-    font-family: sans-serif;
-    margin-top: 85px;
-    
-}
-.studentData-form label{
 
+.student-data{
+    background-color:blueviolet;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px;
+    margin-top: 50px;
+    font-size: 18px;
+    font-family: cursive;
+}
+.button-field{
+    margin-left: 28%;
+}
+.interview-data{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 60px;
+    font-size: 18px;
+    font-family: cursive;
+}
+.input-button{
+    margin-top: 25px;
+    margin-left: 21%;
 }

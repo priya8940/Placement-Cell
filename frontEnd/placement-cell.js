@@ -203,6 +203,7 @@ logOutButton.addEventListener('click',()=>{
 
 var studentButton=document.getElementById('student');
    studentButton.addEventListener('click',()=>{
+
     fetch(`http://localhost:8000/students/allstudent`,{
         'method':'GET',
         'credentials':'include',
@@ -215,6 +216,194 @@ var studentButton=document.getElementById('student');
            showStudents(res);
     })
 });
+let addStudentButton=document.getElementById('add_stu')
+addStudentButton.addEventListener('click',addStudent)
+function addStudent(){
+    let rootEle=document.getElementById('root')
+    rootEle.innerHTML="";
+
+    let labelEle1=document.createElement('label');
+    labelEle1.innerHTML="Student's name:"
+    let inputEle1=document.createElement('input');
+    
+   
+    let childDivEle1=document.createElement('div');
+    childDivEle1.appendChild(labelEle1);
+    childDivEle1.appendChild(inputEle1);
+
+    let parentDiv=document.createElement('div');
+    parentDiv.classList.add('student-data');
+    parentDiv.appendChild(childDivEle1);
+
+    let labelEle2=document.createElement('label');
+    labelEle2.innerHTML="Student's Email:"
+    let inputEle2=document.createElement('input');
+    let childDivEle2=document.createElement('div');
+    
+    childDivEle2.appendChild(labelEle2);
+    childDivEle2.appendChild(inputEle2);
+    parentDiv.appendChild(childDivEle2);
+
+    let labelEle3=document.createElement('label');
+    labelEle3.innerHTML=" Student's college_name:"
+    let inputEle3=document.createElement('input');
+    let childDivEle3=document.createElement('div');
+    
+    childDivEle3.appendChild(labelEle3);
+    childDivEle3.appendChild(inputEle3);
+    parentDiv.appendChild(childDivEle3);
+
+    let labelEle4=document.createElement('label');
+    labelEle4.innerHTML=" Student's status:"
+    let inputEle4=document.createElement('input');
+    let childDivEle4=document.createElement('div');
+   
+    childDivEle4.appendChild(labelEle4);
+    childDivEle4.appendChild(inputEle4);
+    parentDiv.appendChild(childDivEle4);
+
+    let labelEle5=document.createElement('label');
+    labelEle5.innerHTML=" Student's dsa_score:"
+    let inputEle5=document.createElement('input');
+    let childDivEle5=document.createElement('div');
+  
+    childDivEle5.appendChild(labelEle5);
+    childDivEle5.appendChild(inputEle5);
+    parentDiv.appendChild(childDivEle5);
+
+    let labelEle6=document.createElement('label');
+    labelEle6.innerHTML=" Student's react_score:"
+    let inputEle6=document.createElement('input');
+    let childDivEle6=document.createElement('div');
+   
+    childDivEle6.appendChild(labelEle6);
+    childDivEle6.appendChild(inputEle6);
+    parentDiv.appendChild(childDivEle6);
+
+    let labelEle7=document.createElement('label');
+    labelEle7.innerHTML="Student's web_dev_score:"
+    let inputEle7=document.createElement('input');
+    let childDivEle7=document.createElement('div');
+   
+    childDivEle7.appendChild(labelEle7);
+    childDivEle7.appendChild(inputEle7);
+    parentDiv.appendChild(childDivEle7);
+
+    let labelEle8=document.createElement('label');
+    labelEle8.innerHTML="Enter Student's batch:"
+    let inputEle8=document.createElement('input');
+    let childDivEle8=document.createElement('div');
+   
+    childDivEle8.appendChild(labelEle8);
+    childDivEle8.appendChild(inputEle8);
+    parentDiv.appendChild(childDivEle8);
+
+   
+    var buttonEle=document.createElement('button');
+    buttonEle.classList.add("button-field")
+    buttonEle.innerHTML="Submit"
+    let childDivEle9=document.createElement('div');
+    childDivEle9.appendChild(buttonEle);
+    buttonEle.addEventListener('click',submitDetails)
+    parentDiv.appendChild(childDivEle9);
+    rootEle.appendChild(parentDiv)
+
+
+    function submitDetails(){
+        console.log("this is running")
+         let name = inputEle1.value;
+         let email = inputEle2.value;
+         let college_name= inputEle3.value
+         let status=inputEle4.value; 
+         let dsa_score=inputEle5.value;
+         let react_score=inputEle6.value;
+        let web_dev_score=inputEle7.value;
+        let batch=inputEle8.value;
+    
+        let resdata = {
+            "email":email,
+            "name":name,
+            "college_name":college_name,
+            "status":status,
+            "dsa_score":dsa_score,
+            "react_score":react_score,
+            "web_dev_score":web_dev_score,
+            "batch":batch
+        }
+    
+        fetch(`http://localhost:8000/students/register`,{
+            'method':'POST',
+            'credentials':'include',
+            'headers':{
+                'content-type':'application/json'
+            },
+            'body':JSON.stringify(resdata)
+    
+        }).then((data)=>{
+            return data.json();
+        }).then((data)=>{
+            h1Ele = document.createElement('h1');
+            if(data.status_code === 201){
+                h1Ele.innerText = `${data.message}`;
+            }else{
+                h1Ele.innerText = `Student have been registered successfully`
+            }
+            rootEle.innerHTML = "";
+            rootEle.appendChild(h1Ele);
+        })
+        
+    }
+
+
+}
+
+// function submitDetails(){
+//     let inputEle1 = document.getElementById('input-field1');
+//     let name = inputEle1.value;
+
+//     let inputEle2 = document.getElementById('input-field2');
+//     let email = inputEle2.value;
+
+//     let inputEle3 = document.getElementById('input-field3');
+//     let college_name= inputEle3.value
+
+//     let inputEle4 = document.getElementById('input-field4');
+//     let status=inputEle4.value;
+
+//     let inputEle5 = document.getElementById('input-field5');
+//     let dsa_score=inputEle5.value;
+
+//     let inputEle6 = document.getElementById('input-field6');
+//     let react_score=inputEle6.value;
+
+//     let inputEle7 = document.getElementById('input-field7');
+//     let web_dev_score=inputEle7.value;
+
+//     let inputEle8 = document.getElementById('input-field8');
+//     let batch=inputEle8.value;
+   
+//     let data = {
+//         "email":email,
+//         "name":name,
+//         "college_name":college_name,
+//         "status":status,
+//         "dsa_score":dsa_score,
+//         "react_score":react_score,
+//         "web_dev_score":web_dev_score,
+//         "batch":batch
+//     }
+
+//     fetch(`http://localhost:8000/students/register`,{
+
+//     }).then(()=>{
+
+//     }).then(()=>{
+
+//     })
+    
+// }
+
+
 
  //SHow All Student
 function showStudents(data){
@@ -255,7 +444,7 @@ function showStudents(data){
         updateButton.innerText = 'update';
         updateButton.classList.add('update');
         divEle.appendChild(updateButton)
-        updateButton.addEventListener('click',updateStudent)
+        
 
         let deleteButton = document.createElement('button');
         deleteButton.innerText = 'delete';
@@ -287,13 +476,66 @@ function deleteStudent(event){
         }
     }) 
 }
-function updateStudent(event){
-        
-}
+var interviewButton=document.getElementById('interview');
+interviewButton.addEventListener('click',()=>{
+
+    fetch(`http://localhost:8000/interviews/all-interviews`,{
+        'method':'GET',
+        'credentials':'include',
+        'headers':{
+            'Content-Type':'application/json'
+          }
+        }).then((data)=>{
+        return data.json();
+        }).then((res)=>{
+           showInterviews(res);
+    })
+});
+function showInterviews(){
+    document.getElementById('student').style.visibility='hidden';
+    document.getElementById('add_stu').style.visibility='visible';
+    document.getElementById('add_interview').style.visibility='visible';
+    document.getElementById('interview').style.visibility='hidden';
+    
+    let rootEle=document.getElementById('root')
+    rootEle.innerHTML="";
+
+    let labelEle1=document.createElement('label');
+    labelEle1.innerHTML="Company name:"
+    let inputEle1=document.createElement('input');
+    inputEle1.classList.add('input1')
+
+    let childDivEle1=document.createElement('div');
+    let parentDivEle=document.createElement('div');
+    parentDivEle.classList.add('interview-data')
+
+    childDivEle1.appendChild(labelEle1);
+    childDivEle1.appendChild(inputEle1);
+    parentDivEle.appendChild(childDivEle1);
+    rootEle.appendChild(parentDivEle)
+    
+    let labelEle2=document.createElement('label');
+    labelEle2.innerHTML="interview_date:"
+    let inputEle2=document.createElement('input');
+    inputEle2.classList.add('input1')
+    let childDivEle2=document.createElement('div');
+    childDivEle2.appendChild(labelEle2);
+    childDivEle2.appendChild(inputEle2);
+    parentDivEle.appendChild(childDivEle2)
+    rootEle.appendChild(parentDivEle)
+
+
+    var buttonEle=document.createElement('button');
+    buttonEle.classList.add("input-button")
+    buttonEle.innerHTML="Done" 
+    let childDivEle3=document.createElement('div');
+    childDivEle3.appendChild(buttonEle);
+    parentDivEle.appendChild(childDivEle3)
+    rootEle.appendChild(parentDivEle)
+
     
 
-
-
+}
 
 function amILoggedIn(){
     fetch(`http://localhost:8000/employees/checkSession`,{
