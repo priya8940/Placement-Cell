@@ -309,8 +309,8 @@ function addStudent(){
     rootEle.appendChild(parentDiv)
 
 
-    function submitDetails(){
-        console.log("this is running")
+function submitDetails(){
+        //console.log("this is running")
          let name = inputEle1.value;
          let email = inputEle2.value;
          let college_name= inputEle3.value
@@ -353,59 +353,8 @@ function addStudent(){
         })
         
     }
-
-
 }
-
-// function submitDetails(){
-//     let inputEle1 = document.getElementById('input-field1');
-//     let name = inputEle1.value;
-
-//     let inputEle2 = document.getElementById('input-field2');
-//     let email = inputEle2.value;
-
-//     let inputEle3 = document.getElementById('input-field3');
-//     let college_name= inputEle3.value
-
-//     let inputEle4 = document.getElementById('input-field4');
-//     let status=inputEle4.value;
-
-//     let inputEle5 = document.getElementById('input-field5');
-//     let dsa_score=inputEle5.value;
-
-//     let inputEle6 = document.getElementById('input-field6');
-//     let react_score=inputEle6.value;
-
-//     let inputEle7 = document.getElementById('input-field7');
-//     let web_dev_score=inputEle7.value;
-
-//     let inputEle8 = document.getElementById('input-field8');
-//     let batch=inputEle8.value;
-   
-//     let data = {
-//         "email":email,
-//         "name":name,
-//         "college_name":college_name,
-//         "status":status,
-//         "dsa_score":dsa_score,
-//         "react_score":react_score,
-//         "web_dev_score":web_dev_score,
-//         "batch":batch
-//     }
-
-//     fetch(`http://localhost:8000/students/register`,{
-
-//     }).then(()=>{
-
-//     }).then(()=>{
-
-//     })
-    
-// }
-
-
-
- //SHow All Student
+//SHow All Student
 function showStudents(data){
     document.getElementById('student').style.visibility='hidden';
     document.getElementById('add_stu').style.visibility='visible';
@@ -478,7 +427,6 @@ function deleteStudent(event){
 }
 var interviewButton=document.getElementById('interview');
 interviewButton.addEventListener('click',()=>{
-
     fetch(`http://localhost:8000/interviews/all-interviews`,{
         'method':'GET',
         'credentials':'include',
@@ -488,12 +436,54 @@ interviewButton.addEventListener('click',()=>{
         }).then((data)=>{
         return data.json();
         }).then((res)=>{
-           showInterviews(res);
+            showInterViews(res);
     })
 });
-function showInterviews(){
+function showInterViews(data){
+   // console.log("its working")
     document.getElementById('student').style.visibility='hidden';
     document.getElementById('add_stu').style.visibility='visible';
+    document.getElementById('add_interview').style.visibility='visible';
+    document.getElementById('interview').style.visibility='hidden';
+    
+    let rootEle=document.getElementById('root')
+     rootEle.innerHTML="";
+    const interviewArr=data.interviews;
+    for(let interview of interviewArr){
+
+    
+    let labelEle1=document.createElement('label');
+    labelEle1.innerText=interview.company_name;
+    let pEle=document.createElement('p');
+    pEle.classList.add('para');
+    pEle.innerText="Company Name"
+    let childDivEle1=document.createElement('div');
+    let parentDivEle=document.createElement('div');
+    parentDivEle.classList.add('interview_details')
+    parentDivEle.appendChild(pEle);
+    childDivEle1.appendChild(labelEle1);
+    parentDivEle.appendChild(childDivEle1);
+    rootEle.appendChild(parentDivEle)
+
+
+   
+    let labelEle2=document.createElement('label');
+    labelEle2.innerText=interview.interview_date
+    let childDivEle2=document.createElement('div');
+    let pEle2=document.createElement('p');
+    pEle2.classList.add('para');
+    pEle2.innerText="Date-Of-Interview"
+    childDivEle2.appendChild(pEle2)
+    childDivEle2.appendChild(labelEle2);
+    parentDivEle.appendChild(childDivEle2)
+    rootEle.appendChild(parentDivEle)
+
+    }
+}
+var addInterviewButton=document.getElementById('add_interview');
+addInterviewButton.addEventListener('click',()=>{
+    document.getElementById('student').style.visibility='hidden';
+    document.getElementById('add_stu').style.visibility='hidden';
     document.getElementById('add_interview').style.visibility='visible';
     document.getElementById('interview').style.visibility='hidden';
     
@@ -517,6 +507,7 @@ function showInterviews(){
     let labelEle2=document.createElement('label');
     labelEle2.innerHTML="interview_date:"
     let inputEle2=document.createElement('input');
+    inputEle2.setAttribute('type','date')
     inputEle2.classList.add('input1')
     let childDivEle2=document.createElement('div');
     childDivEle2.appendChild(labelEle2);
@@ -533,9 +524,32 @@ function showInterviews(){
     parentDivEle.appendChild(childDivEle3)
     rootEle.appendChild(parentDivEle)
 
-    
+    buttonEle.addEventListener('click',()=>{
+        let company_name = inputEle1.value;
+        let interview_date = inputEle2.value;
+       
+        let resdata={
+            'company_name':company_name,
+            'interview_date':interview_date
+        }
+        fetch(`http://localhost:8000/interviews/register`,{
+            'method':'POST',
+            'credentials':'include',
+            'headers':{
+                'content-type':'application/json'
+            },
+            'body':JSON.stringify(resdata)
+        }).then((data)=>{
+            return data.json();
+        }).then((data)=>{
 
-}
+        })   
+    })
+
+
+
+})
+
 
 function amILoggedIn(){
     fetch(`http://localhost:8000/employees/checkSession`,{

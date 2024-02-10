@@ -24,7 +24,8 @@ body{
 }
 .buttons{
     margin-top: 22px;
-   
+    border-radius: 25%;
+    border: 1px solid aqua;
 }
 .login{
     text-align: center;
@@ -70,4 +71,16 @@ body{
 .input-button{
     margin-top: 25px;
     margin-left: 21%;
+}
+.interview_details{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 60px;
+    font-size: 18px;
+    font-family: cursive;
+}
+.para{
+    color:steelblue
 }

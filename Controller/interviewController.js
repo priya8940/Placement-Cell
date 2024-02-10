@@ -20,7 +20,7 @@ module.exports.getAllInterview =async (req, res)=>{
     res.json({
             'status_code':200,
             'message': 'interviews has been fetched successfully',
-            'students': interviews
+            'interviews': interviews
         });
     return res;
 }
@@ -30,7 +30,7 @@ module.exports.getInterview =async (req, res)=>{
     res.json({
             'status_code':200,
             'message': 'interview has been fetched successfully',
-            'students': interview
+            'interview': interview
         });
     return res;
 }
@@ -40,7 +40,7 @@ module.exports.deleteInterview =async (req, res)=>{
     res.json({
             'status_code':200,
             'message': 'interview has been deleted successfully',
-            'students': interviewDel
+            'interviewDel': interviewDel
         });
     return res;
 }
