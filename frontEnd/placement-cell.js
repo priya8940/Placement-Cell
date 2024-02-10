@@ -343,13 +343,22 @@ function submitDetails(){
             return data.json();
         }).then((data)=>{
             h1Ele = document.createElement('h1');
-            if(data.status_code === 201){
-                h1Ele.innerText = `${data.message}`;
+            if(data.status_code != 201){
+                h1Ele.innerText = `Something Went Wrong`
             }else{
-                h1Ele.innerText = `Student have been registered successfully`
+                fetch(`http://localhost:8000/students/allstudent`,{
+                    'method':'GET',
+                    'credentials':'include',
+                    'headers':{
+                        'Content-Type':'application/json'
+                      }
+                    }).then((data)=>{
+                    return data.json();
+                    }).then((res)=>{
+                       showStudents(res);
+                })
             }
-            rootEle.innerHTML = "";
-            rootEle.appendChild(h1Ele);
+            
         })
         
     }
@@ -492,37 +501,38 @@ addInterviewButton.addEventListener('click',()=>{
 
     let labelEle1=document.createElement('label');
     labelEle1.innerHTML="Company name:"
-    let inputEle1=document.createElement('input');
-    inputEle1.classList.add('input1')
-
     let childDivEle1=document.createElement('div');
+
+    let labelEle2=document.createElement('label');
+    labelEle2.innerHTML=" Date Of interview:"
+    let childDivEle2=document.createElement('div');
+
     let parentDivEle=document.createElement('div');
-    parentDivEle.classList.add('interview-data')
+    parentDivEle.getElementById('about-interview')
+
+    let grandParentDiv=document.createElement('div')
+    grandParentDiv.classList.add('interview_details')
 
     childDivEle1.appendChild(labelEle1);
-    childDivEle1.appendChild(inputEle1);
-    parentDivEle.appendChild(childDivEle1);
-    rootEle.appendChild(parentDivEle)
-    
-    let labelEle2=document.createElement('label');
-    labelEle2.innerHTML="interview_date:"
-    let inputEle2=document.createElement('input');
-    inputEle2.setAttribute('type','date')
-    inputEle2.classList.add('input1')
-    let childDivEle2=document.createElement('div');
     childDivEle2.appendChild(labelEle2);
-    childDivEle2.appendChild(inputEle2);
-    parentDivEle.appendChild(childDivEle2)
-    rootEle.appendChild(parentDivEle)
+    parentDivEle.appendChild(childDivEle1);
+    parentDivEle.appendChild(childDivEle2);
+    grandParentDiv.appendChild(parentDivEle);
+    rootEle.appendChild(grandParentDiv)
+    
+    
 
 
-    var buttonEle=document.createElement('button');
-    buttonEle.classList.add("input-button")
-    buttonEle.innerHTML="Done" 
-    let childDivEle3=document.createElement('div');
-    childDivEle3.appendChild(buttonEle);
-    parentDivEle.appendChild(childDivEle3)
-    rootEle.appendChild(parentDivEle)
+    var ParticipantbuttonEle=document.createElement('button');
+    ParticipantbuttonEle.innerHTML="Participant"
+
+    var DeletebuttonEle=document.createElement('button');
+    DeletebuttonEle.innerHTML="DELETE"
+
+    parentDivEle.appendChild(ParticipantbuttonEle)
+    parentDivEle.appendChild(DeletebuttonEle)
+    grandParentDiv.appendChild(parentDivEle)
+    rootEle.appendChild(grandParentDiv)
 
     buttonEle.addEventListener('click',()=>{
         let company_name = inputEle1.value;
@@ -542,7 +552,25 @@ addInterviewButton.addEventListener('click',()=>{
         }).then((data)=>{
             return data.json();
         }).then((data)=>{
-
+            h1Ele = document.createElement('h1');
+            if(data.status_code != 201){
+                let rootEle=document.getElementById('root')
+                rootEle.innerHTML="";
+                h1Ele.innerText = `Something Went Wrong`
+                rootEle.appendChild(h1Ele);
+             }else{
+                fetch(`http://localhost:8000/interviews/all-interviews`,{
+                    'method':'GET',
+                    'credentials':'include',
+                    'headers':{
+                        'Content-Type':'application/json'
+                      }
+                    }).then((data)=>{
+                    return data.json();
+                    }).then((res)=>{
+                        showInterViews(res);
+                })
+             }
         })   
     })
 
