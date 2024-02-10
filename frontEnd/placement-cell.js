@@ -458,36 +458,58 @@ function showInterViews(data){
     let rootEle=document.getElementById('root')
      rootEle.innerHTML="";
     const interviewArr=data.interviews;
+    
     for(let interview of interviewArr){
-
     
     let labelEle1=document.createElement('label');
     labelEle1.innerText=interview.company_name;
-    let pEle=document.createElement('p');
-    pEle.classList.add('para');
-    pEle.innerText="Company Name"
+    // let pEle=document.createElement('p');
+    // pEle.classList.add('para');
+    // pEle.innerText="Company Name"
     let childDivEle1=document.createElement('div');
     let parentDivEle=document.createElement('div');
     parentDivEle.classList.add('interview_details')
-    parentDivEle.appendChild(pEle);
+    // parentDivEle.appendChild(pEle);
+    let deleteButtonEle=document.createElement('button');
+    deleteButtonEle.setAttribute('id','deletBtn');
+    deleteButtonEle.innerHTML='Delete'
+    deleteButtonEle.addEventListener('click',deleteParticipant)
+
+    let participantButtonEle=document.createElement('button');
+    participantButtonEle.setAttribute('id','particpntBtn');
+    participantButtonEle.innerHTML='addParticipant'
+    participantButtonEle.addEventListener('click',addParticipantButtonEle)
+
+    
     childDivEle1.appendChild(labelEle1);
     parentDivEle.appendChild(childDivEle1);
     rootEle.appendChild(parentDivEle)
+    
 
 
    
     let labelEle2=document.createElement('label');
     labelEle2.innerText=interview.interview_date
     let childDivEle2=document.createElement('div');
-    let pEle2=document.createElement('p');
-    pEle2.classList.add('para');
-    pEle2.innerText="Date-Of-Interview"
-    childDivEle2.appendChild(pEle2)
+    // let pEle2=document.createElement('p');
+    // pEle2.classList.add('para');
+    // pEle2.innerText="Date-Of-Interview"
+    // childDivEle2.appendChild(pEle2)
     childDivEle2.appendChild(labelEle2);
     parentDivEle.appendChild(childDivEle2)
     rootEle.appendChild(parentDivEle)
+    parentDivEle.appendChild(deleteButtonEle);
+    parentDivEle.appendChild(participantButtonEle);
 
     }
+    
+}
+function deleteParticipant(){
+console.log("deleteParticipant")
+}
+function addParticipantButtonEle(){
+    console.log("participantButtonEle")
+
 }
 var addInterviewButton=document.getElementById('add_interview');
 addInterviewButton.addEventListener('click',()=>{
@@ -501,38 +523,37 @@ addInterviewButton.addEventListener('click',()=>{
 
     let labelEle1=document.createElement('label');
     labelEle1.innerHTML="Company name:"
+    let inputEle1=document.createElement('input');
+    inputEle1.classList.add('input1')
+
     let childDivEle1=document.createElement('div');
-
-    let labelEle2=document.createElement('label');
-    labelEle2.innerHTML=" Date Of interview:"
-    let childDivEle2=document.createElement('div');
-
     let parentDivEle=document.createElement('div');
-    parentDivEle.getElementById('about-interview')
-
-    let grandParentDiv=document.createElement('div')
-    grandParentDiv.classList.add('interview_details')
+    parentDivEle.classList.add('interview-data')
 
     childDivEle1.appendChild(labelEle1);
-    childDivEle2.appendChild(labelEle2);
+    childDivEle1.appendChild(inputEle1);
     parentDivEle.appendChild(childDivEle1);
-    parentDivEle.appendChild(childDivEle2);
-    grandParentDiv.appendChild(parentDivEle);
-    rootEle.appendChild(grandParentDiv)
+    rootEle.appendChild(parentDivEle)
     
-    
+    let labelEle2=document.createElement('label');
+    labelEle2.innerHTML="interview_date:"
+    let inputEle2=document.createElement('input');
+    inputEle2.setAttribute('type','date')
+    inputEle2.classList.add('input1')
+    let childDivEle2=document.createElement('div');
+    childDivEle2.appendChild(labelEle2);
+    childDivEle2.appendChild(inputEle2);
+    parentDivEle.appendChild(childDivEle2)
+    rootEle.appendChild(parentDivEle)
 
 
-    var ParticipantbuttonEle=document.createElement('button');
-    ParticipantbuttonEle.innerHTML="Participant"
-
-    var DeletebuttonEle=document.createElement('button');
-    DeletebuttonEle.innerHTML="DELETE"
-
-    parentDivEle.appendChild(ParticipantbuttonEle)
-    parentDivEle.appendChild(DeletebuttonEle)
-    grandParentDiv.appendChild(parentDivEle)
-    rootEle.appendChild(grandParentDiv)
+    var buttonEle=document.createElement('button');
+    buttonEle.classList.add("input-button")
+    buttonEle.innerHTML="Done" 
+    let childDivEle3=document.createElement('div');
+    childDivEle3.appendChild(buttonEle);
+    parentDivEle.appendChild(childDivEle3)
+    rootEle.appendChild(parentDivEle)
 
     buttonEle.addEventListener('click',()=>{
         let company_name = inputEle1.value;
@@ -568,9 +589,9 @@ addInterviewButton.addEventListener('click',()=>{
                     }).then((data)=>{
                     return data.json();
                     }).then((res)=>{
-                        showInterViews(res);
+                       showInterViews(res);
                 })
-             }
+                 }
         })   
     })
 

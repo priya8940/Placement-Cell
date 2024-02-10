@@ -72,9 +72,14 @@ body{
     margin-top: 25px;
     margin-left: 21%;
 }
-#interview-buttons{
-    margin-top: 29px;
-    margin-left: 85%;
+.interview_details{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 60px;
+    font-size: 18px;
+    font-family: cursive;
 }
 .para{
     color:steelblue
@@ -87,3 +92,12 @@ body{
     font-size: 18px;
     font-family: cursive;
 }
+/* .interview-data{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 60px;
+    font-size: 18px;
+    font-family: cursive;
+} */
