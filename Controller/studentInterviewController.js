@@ -1,7 +1,7 @@
 const studentInterviewModel=require('../Model/student_interview')
 
 module.exports.allocateInterviewToStudent=async (req, res)=>{
-   const {interview_id,stu_id}=req.body;
+   const {interview_id,stu_id,result}=req.body;
 
    if(interview_id==undefined || stu_id==undefined){
     res.json({

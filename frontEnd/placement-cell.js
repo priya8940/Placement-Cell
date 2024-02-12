@@ -471,12 +471,22 @@ function showInterViews(data){
     parentDivEle.classList.add('interview_details')
     // parentDivEle.appendChild(pEle);
     let deleteButtonEle=document.createElement('button');
-    deleteButtonEle.setAttribute('id','deletBtn');
-    deleteButtonEle.innerHTML='Delete'
-    deleteButtonEle.addEventListener('click',deleteParticipant)
 
+    ///////YUO HAVE TO ASK THIS PORTION
+    //so here we are sending the real(Dynamic id) id to delete Interview
+    deleteButtonEle.setAttribute('id', interview._id);
+    deleteButtonEle.innerHTML='Delete'
+    deleteButtonEle.addEventListener('click',deleteInterview)
+
+    
+    //input box for addng participants by Email_id
+    let inputEle=document.createElement('input');
+    inputEle.setAttribute('name',interview.company_name);
+   inputEle.setAttribute('id','interview'+interview._id)
+   inputEle.style.visibility='hidden'
+ 
     let participantButtonEle=document.createElement('button');
-    participantButtonEle.setAttribute('id','particpntBtn');
+    participantButtonEle.setAttribute('id',interview._id);
     participantButtonEle.innerHTML='addParticipant'
     participantButtonEle.addEventListener('click',addParticipantButtonEle)
 
@@ -499,16 +509,76 @@ function showInterViews(data){
     parentDivEle.appendChild(childDivEle2)
     rootEle.appendChild(parentDivEle)
     parentDivEle.appendChild(deleteButtonEle);
+    parentDivEle.appendChild(inputEle);
     parentDivEle.appendChild(participantButtonEle);
 
     }
     
 }
-function deleteParticipant(){
-console.log("deleteParticipant")
+function deleteInterview(event){
+    fetch(`http://localhost:8000/interviews/delete/${event.target.id}`,{
+        'method':'DELETE',
+        'credentials':'include',
+        'headers':{
+            'Content-Type':'application/json'
+          }
+        }).then((data)=>{
+        return data.json();
+        }).then((res)=>{
+            //if status code is true so you have to reload page again so will call fetch and show interview
+            if(res.status_code===200){
+                fetch(`http://localhost:8000/interviews/all-interviews`,{
+                    'method':'GET',
+                    'credentials':'include',
+                    'headers':{
+                        'Content-Type':'application/json'
+                    }
+                    }).then((data)=>{
+                    return data.json();
+                    }).then((res)=>{
+                        showInterViews(res);
+        })
+
+            }
+    })
 }
-function addParticipantButtonEle(){
+function addParticipantButtonEle(event){
     console.log("participantButtonEle")
+    let interviewId=event.target.id 
+    let inputEle=document.getElementById('interview'+event.target.id )
+    if(inputEle.style.visibility!='visible'){
+        inputEle.style.visibility='visible'
+    }else{
+        const emailId=inputEle.value;
+        inputEle.style.visibility='hidden'
+        fetch(`http://localhost:8000/students/get-student-byEmail`,{
+            'method':'POST',
+            'credentials':'include',
+            'headers':{
+                'Content-Type':'application/json'
+            },
+            'body': JSON.stringify({'email_id': emailId})
+
+            }).then((data)=>{
+            return data.json();
+            }).then((res)=>{
+                const studentId=res.students._id
+                fetch(`http://localhost:8000/student-interview/register`,{
+                    'method':'POST',
+                    'credentials':'include',
+                    'headers':{
+                        'Content-Type':'application/json'
+                      },
+                      'body': JSON.stringify({'stu_id': studentId,'interview_id':interviewId,'result':'NOT ATTEMPTED'})
+                    }).then((data)=>{
+                    return data.json();
+                    }).then((res)=>{
+                       
+                })
+               
+        })
+    }
+   
 
 }
 var addInterviewButton=document.getElementById('add_interview');

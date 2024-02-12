@@ -90,3 +90,16 @@ module.exports.getStudent = async (req, res)=>{
     
 }
 
+module.exports.getStudentByEmail = async (req, res)=>{
+    const emailId = req.body.email_id;
+    //console.log(id)
+    const student=await studentModel.findOne({'email':emailId })
+        res.json({
+            'message': 'Student has been fetched succcesfully',
+            'status_code': 200,
+            'students':student
+        })
+        return res;
+    
+}
+
