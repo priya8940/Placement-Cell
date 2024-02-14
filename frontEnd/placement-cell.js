@@ -463,6 +463,7 @@ function showInterViews(data){
     
     let labelEle1=document.createElement('label');
     labelEle1.innerText=interview.company_name;
+    labelEle1.addEventListener('click',showParticipants);
     // let pEle=document.createElement('p');
     // pEle.classList.add('para');
     // pEle.innerText="Company Name"
@@ -474,7 +475,7 @@ function showInterViews(data){
 
     ///////YUO HAVE TO ASK THIS PORTION
     //so here we are sending the real(Dynamic id) id to delete Interview
-    deleteButtonEle.setAttribute('id', interview._id);
+    // deleteButtonEle.setAttribute('id', interview._id);
     deleteButtonEle.innerHTML='Delete'
     deleteButtonEle.addEventListener('click',deleteInterview)
 
@@ -482,11 +483,11 @@ function showInterViews(data){
     //input box for addng participants by Email_id
     let inputEle=document.createElement('input');
     inputEle.setAttribute('name',interview.company_name);
-   inputEle.setAttribute('id','interview'+interview._id)
-   inputEle.style.visibility='hidden'
+    inputEle.setAttribute('id','interview'+interview._id)
+    inputEle.style.visibility='hidden'
  
     let participantButtonEle=document.createElement('button');
-    participantButtonEle.setAttribute('id',interview._id);
+    //participantButtonEle.setAttribute('id',interview._id);
     participantButtonEle.innerHTML='addParticipant'
     participantButtonEle.addEventListener('click',addParticipantButtonEle)
 
@@ -507,6 +508,7 @@ function showInterViews(data){
     // childDivEle2.appendChild(pEle2)
     childDivEle2.appendChild(labelEle2);
     parentDivEle.appendChild(childDivEle2)
+    parentDivEle.id=interview._id
     rootEle.appendChild(parentDivEle)
     parentDivEle.appendChild(deleteButtonEle);
     parentDivEle.appendChild(inputEle);
@@ -515,8 +517,55 @@ function showInterViews(data){
     }
     
 }
+function showParticipants(event){
+ //console.log(event.target.parentElement.parentElement.id)
+ fetch(`http://localhost:8000/student-interview/get-students-by-interview/${event.target.parentElement.parentElement.id}`,{
+        'method':'GET',
+        'credentials':'include',
+        'headers':{
+            'Content-Type':'application/json'
+          }
+        }).then((data)=>{
+        return data.json();
+        }).then((res)=>{
+
+            //show all Students and Status
+          if(res.status_code==200){
+            const studentInterviewList=res.students
+            for(const  studentInterview of studentInterviewList){
+                const studentId=studentInterview.stu_id;
+                const status=studentInterview.result;
+
+                fetch(`http://localhost:8000/students/${studentId}`,{
+                    'method':'GET',
+                    'credentials':'include',
+                    'headers':{
+                        'Content-Type':'application/json'
+                 }
+                }).then((data)=>{
+                    return data.json();
+                }).then((res)=>{
+                    const student=res.students;
+                    let root=document.getElementById('root');
+                    root.innerHTML="";
+
+                      //show in UI, name of student,email, and status
+                    let nameEle=document.getElementById('name');
+                    let emailEle=document.getElementById('email')
+                    let status=document.getElementById('status')
+                    
+
+                   
+
+
+
+                })
+            }
+           }
+        })
+}
 function deleteInterview(event){
-    fetch(`http://localhost:8000/interviews/delete/${event.target.id}`,{
+    fetch(`http://localhost:8000/interviews/delete/${event.target.parentElement.id}`,{
         'method':'DELETE',
         'credentials':'include',
         'headers':{
@@ -544,8 +593,8 @@ function deleteInterview(event){
 }
 function addParticipantButtonEle(event){
     console.log("participantButtonEle")
-    let interviewId=event.target.id 
-    let inputEle=document.getElementById('interview'+event.target.id )
+    let interviewId=event.target.parentElement.id 
+    let inputEle=document.getElementById('interview'+event.target.parentElement.id )
     if(inputEle.style.visibility!='visible'){
         inputEle.style.visibility='visible'
     }else{

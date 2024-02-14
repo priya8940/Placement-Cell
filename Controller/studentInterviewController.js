@@ -50,3 +50,13 @@ module.exports.deleteAllocatedInterview =async (req, res)=>{
         });
     return res;
 }
+module.exports.getStudentByInterview =async (req, res)=>{
+    const id=req.params.id;
+    const students=await studentInterviewModel.find({'interview_id':id})
+    res.json({
+            'status_code':200,
+            'message': 'all students of Interview has been fetched successfully',
+            'students': students
+        });
+    return res;
+}
