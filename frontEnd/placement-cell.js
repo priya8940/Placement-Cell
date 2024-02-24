@@ -545,15 +545,46 @@ function showParticipants(event){
                 }).then((data)=>{
                     return data.json();
                 }).then((res)=>{
-                    const student=res.students;
+                    //const student=res.students;
                     let root=document.getElementById('root');
                     root.innerHTML="";
-
-                      //show in UI, name of student,email, and status
-                    let nameEle=document.getElementById('name');
-                    let emailEle=document.getElementById('email')
-                    let status=document.getElementById('status')
                     
+                     //show in UI, name of student,email, and status
+                    let rowDiv=document.createElement('div');
+                    rowDiv.classList.add('interview_details')
+
+                    let nameEleDiv=document.createElement('div');
+                    nameEleDiv.innerText=res.students.name;
+                    rowDiv.appendChild(nameEleDiv);
+                    
+                    let emailEleDiv=document.createElement('div');
+                    emailEleDiv.innerText=res.students.email;
+                    rowDiv.appendChild(emailEleDiv);
+                    
+                    let batchDiv=document.createElement('div');
+                    batchDiv.innerText=res.students.batch;
+                    rowDiv.appendChild(batchDiv);
+
+                    let statusDiv=document.createElement('div');
+                    statusDiv.innerText=res.students.status;
+                    rowDiv.appendChild(statusDiv);
+
+                    let statusEle = document.createElement('input');
+                    statusEle.setAttribute('type','text');
+                    statusEle.setAttribute('placeholder','Enter the status');
+                    rowDiv.appendChild(statusEle);
+                    
+
+
+
+                    let buttonDiv= document.createElement('div');
+                    let statusUpdate=document.createElement('button');
+                    statusUpdate.innerHTML="Update Status";
+                    buttonDiv.appendChild(statusUpdate);
+                    rowDiv.appendChild(buttonDiv);
+                    
+                    root.appendChild(rowDiv);
+                  
 
                    
 
