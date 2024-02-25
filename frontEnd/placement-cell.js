@@ -518,6 +518,7 @@ function showInterViews(data){
     
 }
 function showParticipants(event){
+    //getting student by interviewId
  //console.log(event.target.parentElement.parentElement.id)
  fetch(`http://localhost:8000/student-interview/get-students-by-interview/${event.target.parentElement.parentElement.id}`,{
         'method':'GET',
@@ -532,8 +533,11 @@ function showParticipants(event){
             //show all Students and Status
           if(res.status_code==200){
             const studentInterviewList=res.students
+            let root=document.getElementById('root');
+             root.innerHTML="";
             for(const  studentInterview of studentInterviewList){
                 const studentId=studentInterview.stu_id;
+               const studentInterviewId=studentInterview._id;
                 const status=studentInterview.result;
 
                 fetch(`http://localhost:8000/students/${studentId}`,{
@@ -546,12 +550,13 @@ function showParticipants(event){
                     return data.json();
                 }).then((res)=>{
                     //const student=res.students;
-                    let root=document.getElementById('root');
-                    root.innerHTML="";
+                    // let root=document.getElementById('root');
+                    // root.innerHTML="";
                     
                      //show in UI, name of student,email, and status
                     let rowDiv=document.createElement('div');
                     rowDiv.classList.add('interview_details')
+                    rowDiv.id=studentInterviewId;
 
                     let nameEleDiv=document.createElement('div');
                     nameEleDiv.innerText=res.students.name;
@@ -566,20 +571,21 @@ function showParticipants(event){
                     rowDiv.appendChild(batchDiv);
 
                     let statusDiv=document.createElement('div');
-                    statusDiv.innerText=res.students.status;
+                    statusDiv.innerText=status;
+                    statusDiv.id='status-'+studentInterviewId;
                     rowDiv.appendChild(statusDiv);
 
                     let statusEle = document.createElement('input');
                     statusEle.setAttribute('type','text');
                     statusEle.setAttribute('placeholder','Enter the status');
+                    statusEle.style.visibility="hidden"
+                    statusEle.id='id-'+studentInterviewId;
                     rowDiv.appendChild(statusEle);
-                    
-
-
 
                     let buttonDiv= document.createElement('div');
                     let statusUpdate=document.createElement('button');
                     statusUpdate.innerHTML="Update Status";
+                    buttonDiv.addEventListener('click',updateInterviewResultStatus);
                     buttonDiv.appendChild(statusUpdate);
                     rowDiv.appendChild(buttonDiv);
                     
@@ -748,6 +754,38 @@ addInterviewButton.addEventListener('click',()=>{
 
 
 })
+function updateInterviewResultStatus(event){
+    //console.log(event.target.parentElement.parentElement.id)
+    const studentInterviewId=event.target.parentElement.parentElement.id
+    let inputId="id-"+studentInterviewId;
+    let inputEle=document.getElementById(inputId);
+    if(inputEle.style.visibility==='visible'){
+        inputEle.style.visibility='hidden'
+    }else{
+        inputEle.style.visibility='visible'
+        return;
+    }
+    //get the value from input tag
+
+    let status=inputEle.value;
+    inputEle.value=''
+    fetch(`http://localhost:8000/student-interview/update/${event.target.parentElement.parentElement.id}`,{
+        'method':'PUT',
+        'credentials':'include',
+        'headers':{
+            'Content-Type':'application/json'
+        },
+        'body':JSON.stringify({
+            'status':status
+        })
+    }).then((res)=>{
+       return res.json();
+    }).then((data)=>{
+         const statusEle=document.getElementById('status-'+studentInterviewId);
+         statusEle.innerText=status.toUpperCase();
+    })
+   
+}
 
 
 function amILoggedIn(){

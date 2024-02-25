@@ -3,6 +3,7 @@ const studentInterviewRouter = express.Router();
 const studentInterviewCtrl = require('../Controller/studentInterviewController');
 
  studentInterviewRouter.post('/register',studentInterviewCtrl.allocateInterviewToStudent);
+ studentInterviewRouter.put('/update/:id',studentInterviewCtrl.UpdateStudentInterview);
  studentInterviewRouter.get('/allocated-interviews/:id',studentInterviewCtrl.getAlocatedInterview);
  studentInterviewRouter.get('/get-students-by-interview/:id',studentInterviewCtrl.getStudentByInterview);
  studentInterviewRouter.delete('/delete/:id',studentInterviewCtrl.deleteAllocatedInterview);

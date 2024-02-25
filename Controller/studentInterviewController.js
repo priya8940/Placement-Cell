@@ -60,3 +60,14 @@ module.exports.getStudentByInterview =async (req, res)=>{
         });
     return res;
 }
+module.exports.UpdateStudentInterview =async (req, res)=>{
+    const id=req.params.id;
+    const interviewStatus=req.body.status;
+    const studentInterview=await studentInterviewModel.findByIdAndUpdate(id,{'result':interviewStatus})
+    res.json({
+            'status_code':200,
+            'message': 'student interview has been updated successfully',
+            'student-interview': studentInterview
+        });
+    return res;
+}
