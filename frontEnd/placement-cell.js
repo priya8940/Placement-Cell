@@ -157,6 +157,7 @@ function welcomeEmployee(){
     logOutBtn.style.visibility = 'visible';
     document.getElementById('student').style.visibility='visible';
     document.getElementById('interview').style.visibility='visible';
+    document.getElementById('csv_data').style.visibility='hidden';
     
     document.getElementById('add_stu').style.visibility='hidden';
     document.getElementById('add_interview').style.visibility='hidden';
@@ -369,6 +370,7 @@ function showStudents(data){
     document.getElementById('add_stu').style.visibility='visible';
     document.getElementById('add_interview').style.visibility='hidden';
     document.getElementById('interview').style.visibility='hidden';
+    document.getElementById('csv_data').style.visibility='visible';
     let rootEle = document.getElementById('root');
     rootEle.innerHTML="";
     const studArr=data.students;
@@ -454,6 +456,7 @@ function showInterViews(data){
     document.getElementById('add_stu').style.visibility='visible';
     document.getElementById('add_interview').style.visibility='visible';
     document.getElementById('interview').style.visibility='hidden';
+    document.getElementById('csv_data').style.visibility='hidden';
     
     let rootEle=document.getElementById('root')
      rootEle.innerHTML="";
@@ -829,7 +832,9 @@ function downloadCSVFile(){
           let csvContent='ID, NAME, BATCH, EMAIL, COLLEGE NAME,STATUS,INTERVIEW DATE, COMPANY NAME,RESULT\n ';
           for(var i=0; i<responseData.length; i++){
             var obj=responseData[i];
+           // console.log(obj);
             const studentObj=obj.stu_id;
+
             csvContent=csvContent+studentObj._id+',';
             csvContent=csvContent+studentObj.name+',';
             csvContent=csvContent+studentObj.batch+',';
