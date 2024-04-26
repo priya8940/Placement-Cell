@@ -32,11 +32,11 @@ module.exports.getAlocatedInterview =async (req, res)=>{
     return res;
 }
 module.exports.getAllAllocatedInterview =async (req, res)=>{
-    const interviews=await studentInterviewModel.find()
+    const interviews=await studentInterviewModel.find().populate('stu_id').populate('interview_id');
     res.json({
             'status_code':200,
             'message': ' All Alocated interviews  fetched successfully',
-            'students': interviews
+            'interviews': interviews
         });
     return res;
 }

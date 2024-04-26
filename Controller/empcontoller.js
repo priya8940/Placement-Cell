@@ -1,4 +1,5 @@
 const empModel=require('../Model/employee')
+const json2csv = require('json2csv').parse;
  
 module.exports.register =async (req, res)=>{
     const {email, name, password} = req.body;
@@ -113,6 +114,14 @@ module.exports.checkSession=async (req,res)=>{
         'message': 'User is LoggedIn',
         'employee':emp
     })
+}
+
+module.exports.allEmpData=async(req,res)=>{
+    const handlingArray=['name','email','salary','department','role'];
+    var csv=json2csv(allEmp,{
+        handlingArray
+    });
+
 }
 
 

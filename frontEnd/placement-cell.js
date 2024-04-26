@@ -809,3 +809,55 @@ function amILoggedIn(){
 }
 amILoggedIn();
 
+var downloadCSV=document.getElementById('csv_data');
+downloadCSV.addEventListener('click',downloadCSVFile)
+
+function downloadCSVFile(){
+    fetch(`http://localhost:8000/student-interview/allAllocated-interviews`,{
+        'method':'GET',
+        'credentials':'include',
+        'headers':{
+              'Content-Type':'application/json'
+          },
+      }).then(data=>{  
+          return data.json();
+      }
+         
+      ).then(response=>{
+          //console.log(response);
+          const responseData=response.interviews;
+          let csvContent='ID, NAME, BATCH, EMAIL, COLLEGE NAME,STATUS,INTERVIEW DATE, COMPANY NAME,RESULT\n ';
+          for(var i=0; i<responseData.length; i++){
+            var obj=responseData[i];
+            const studentObj=obj.stu_id;
+            csvContent=csvContent+studentObj._id+',';
+            csvContent=csvContent+studentObj.name+',';
+            csvContent=csvContent+studentObj.batch+',';
+            csvContent=csvContent+studentObj.email+',';
+            csvContent=csvContent+studentObj.college_name+',';
+            csvContent=csvContent+studentObj.status+',';
+            const interViewObj=obj.interview_id;
+            csvContent=csvContent+interViewObj.interview_date+',';
+            csvContent=csvContent+interViewObj.company_name+',';
+            csvContent=csvContent+obj.result+'\n';
+          }
+ 
+          var blob=new Blob([csvContent],{type:'text/csv'});
+
+          //create temporary anchor Element
+          var anchor=document.createElement('a');
+          anchor.href=window.URL.createObjectURL(blob);
+          anchor.download='student-data.csv';
+          anchor.style.display='none';
+
+          //append anchor to the body and click it programmatically
+          document.body.appendChild(anchor);
+          anchor.click();
+
+          //cleanUp
+
+          document.body.removeChild(anchor);
+
+         
+      })
+}
